@@ -2,6 +2,7 @@
   "name": "asyncstorage",
   "version": "0.0.1",
   "private": true,
+  "description": "Proyecto de ejemplo en React Native con TypeScript para aprender a persistir datos localmente usando AsyncStorage.",
   "scripts": {
     "android": "react-native run-android",
     "android:full": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
