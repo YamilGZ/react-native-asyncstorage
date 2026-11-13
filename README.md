@@ -1,97 +1,80 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native + AsyncStorage Demo
 
-# Getting Started
+Proyecto de ejemplo en React Native que muestra cómo persistir datos localmente con [`@react-native-async-storage/async-storage`](https://react-native-async-storage.github.io/async-storage/).
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Funcionalidad
 
-## Step 1: Start Metro
+La app (`[App.tsx](App.tsx)`) presenta una sencilla interfaz para:
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+- Escribir un nombre en un `TextInput`.
+- **Guardar** el nombre en AsyncStorage con el botón *Guardar*.
+- **Ver** el nombre guardado en pantalla (`Hola: {nombre}`).
+- **Eliminar** el nombre de AsyncStorage y limpiar el input con el botón *Eliminar Nombre*.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Scripts principales
+
+| Script | Descripción |
+|--------|-------------|
+| `npm start` | Inicia el servidor de Metro. |
+| `npm run android` | Compila y ejecuta la app en Android. |
+| `npm run android:full` | Ejecuta el flujo completo de inicio en Android (vía PowerShell). |
+| `npm run ios` | Compila y ejecuta la app en iOS. |
+| `npm run build:apk` | Genera la APK de release y la copia a `app-asyncstorage.apk`. |
+| `npm run clean:deps` | Limpia carpetas de build de Android y `node_modules`. |
+| `npm test` | Ejecuta los tests con Jest. |
+| `npm run lint` | Corre ESLint sobre el proyecto. |
+
+## Dependencias clave
+
+- `react-native`: `0.87.1`
+- `react`: `19.2.3`
+- `@react-native-async-storage/async-storage`: `^3.1.1`
+
+## Cómo correr la app
+
+1. Asegúrate de tener el entorno de React Native configurado siguiendo la [guía oficial](https://reactnative.dev/docs/set-up-your-environment).
+2. Instala las dependencias:
 
 ```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm install
 ```
 
-## Step 2: Build and run your app
+3. Inicia Metro:
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+```sh
+npm start
+```
+
+4. En otra terminal, ejecuta la app:
 
 ### Android
 
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
 ### iOS
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
 ```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+> Nota: Para iOS es necesario instalar las dependencias de CocoaPods con `bundle install` y `bundle exec pod install` antes de correr la app por primera vez.
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Sobre AsyncStorage
 
-## Step 3: Modify your app
+- `AsyncStorage.setItem('nombre', value)` guarda el valor.
+- `AsyncStorage.getItem('nombre')` lo recupera (puede devolver `string \| null`).
+- `AsyncStorage.removeItem('nombre')` lo elimina.
 
-Now that you have successfully run the app, let's make changes!
+En este proyecto, las funciones `guardarDatos`, `obtenerDatosStorage` y `eliminarDatos` en `[App.tsx](App.tsx)` encapsulan estas operaciones y manejan errores con bloques `try/catch`.
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## Troubleshooting
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+- Si Metro tira un error de import o componente `undefined`, reinicia el bundler con:
+  ```sh
+  npm start -- --reset-cache
+  ```
+- Si la app no refleja cambios del input, verifica que `TextInput` sea controlado (`value={inputTexto}`).
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Para más información, consulta la documentación oficial de [React Native](https://reactnative.dev/docs/getting-started) y [AsyncStorage](https://react-native-async-storage.github.io/async-storage/).

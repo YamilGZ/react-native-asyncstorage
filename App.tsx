@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Componente principal: pantalla para guardar, mostrar y eliminar un nombre usando AsyncStorage
 export default function App() {
 
+  // Estado para el texto que escribe el usuario en el input
   const [ inputTexto, guardarInputTexto ] = useState('');
+  // Estado para el nombre ya persistido en AsyncStorage
   const [ nombreStorage, guardarNombreStorage ] = useState('');
 
+  // Al iniciar la app, recupera el nombre guardado (si existe)
   useEffect(() => {
     obtenerDatosStorage()
   }, []);
 
+  // Guarda el nombre en AsyncStorage, lo muestra y limpia el input
   const guardarDatos = async () => {
+    if (!inputTexto.trim()) {
+      Alert.alert('Error', 'El campo nombre es obligatorio');
+      return;
+    }
+
     try {
       await AsyncStorage.setItem('nombre', inputTexto)
       guardarNombreStorage(inputTexto)
@@ -21,6 +31,7 @@ export default function App() {
     }
   }
 
+  // Lee el nombre almacenado y lo asigna al estado (usa '' si no hay nada)
   const obtenerDatosStorage = async () => {
     try {
       const nombre = await AsyncStorage.getItem('nombre');
@@ -30,6 +41,7 @@ export default function App() {
     }
   }
 
+  // Elimina el nombre de AsyncStorage y resetea la interfaz
   const eliminarDatos = async () => {
     try {
       await AsyncStorage.removeItem('nombre');
