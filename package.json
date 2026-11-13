@@ -4,15 +4,18 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:full": "powershell -ExecutionPolicy Bypass -File ./start.ps1",
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build:apk": "node -e \"const{spawn}=require('child_process');const path=require('path');const cwd=path.resolve('android');const isWin=process.platform==='win32';const gradlew=path.join(cwd,isWin?'gradlew.bat':'gradlew');const cmd=isWin?'cmd':gradlew;const args=isWin?['/c',gradlew,'assembleRelease']:['assembleRelease'];const build=spawn(cmd,args,{stdio:'inherit',cwd});build.on('close',(code)=>{if(code!==0){console.error('Error en build:',code);process.exit(code);}const src=path.join(cwd,'app','build','outputs','apk','release','app-release.apk');const dst=path.join(cwd,'..','app-asyncstorage.apk');require('fs').copyFileSync(src,dst);console.log('APK copiada a',dst);});\"",
+    "clean:deps": "node -e \"['android/app/build','android/app/.cxx','android/.gradle','android/build','node_modules'].forEach(d=>{try{require('fs').rmSync(d,{recursive:true,force:true});console.log('Eliminado:',d);}catch(e){console.error('Error al eliminar',d,e.message);}})\""
   },
   "dependencies": {
+    "@react-native/new-app-screen": "0.87.1",
     "react": "19.2.3",
     "react-native": "0.87.1",
-    "@react-native/new-app-screen": "0.87.1",
     "react-native-safe-area-context": "^5.5.2"
   },
   "devDependencies": {
